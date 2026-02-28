@@ -9,12 +9,10 @@
                     {% csrf_token %}
                     {% for field in form %}
                         <div class="mb-3">
-                            <label class="form-label">{{ field.label }}</label>
-                            <input type="{{ field.field.widget.input_type }}" name="{{ field.html_name }}" 
-                                   class="form-control {% if field.errors %}is-invalid{% endif %}"
-                                   value="{{ field.value|default:'' }}">
+                            <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                            {{ field }}
                             {% for error in field.errors %}
-                                <div class="invalid-feedback">{{ error }}</div>
+                                <div class="text-danger small">{{ error }}</div>
                             {% endfor %}
                         </div>
                     {% endfor %}

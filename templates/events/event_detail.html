@@ -19,14 +19,14 @@
             </div>
             <div class="card-footer d-flex gap-2">
                 {% if user.is_authenticated %}
-                    {% if user.groups.all.0.name == 'Participant' %}
+                    {% if user.groups.filter(name='Participant').exists %}
                         {% if user_rsvped %}
                             <a href="{% url 'cancel_rsvp' event.pk %}" class="btn btn-warning">Cancel RSVP</a>
                         {% else %}
                             <a href="{% url 'rsvp_event' event.pk %}" class="btn btn-success">RSVP to this Event</a>
                         {% endif %}
                     {% endif %}
-                    {% if user.is_superuser or user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Organizer' %}
+                    {% if user.is_superuser or user.groups.filter(name='Admin').exists or user.groups.filter(name='Organizer').exists %}
                         <a href="{% url 'event_update' event.pk %}" class="btn btn-warning">Edit</a>
                         <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger">Delete</a>
                     {% endif %}

@@ -3,7 +3,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-calendar3"></i> All Events</h2>
     {% if user.is_authenticated %}
-        {% if user.is_superuser or user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Organizer' %}
+        {% if user.is_superuser or user.groups.filter(name='Admin').exists or user.groups.filter(name='Organizer').exists %}
             <a href="{% url 'event_create' %}" class="btn btn-success"><i class="bi bi-plus-circle"></i> Create Event</a>
         {% endif %}
     {% endif %}
@@ -24,7 +24,7 @@
             <div class="card-footer d-flex gap-2">
                 <a href="{% url 'event_detail' event.pk %}" class="btn btn-primary btn-sm">View</a>
                 {% if user.is_authenticated %}
-                    {% if user.is_superuser or user.groups.all.0.name == 'Admin' or user.groups.all.0.name == 'Organizer' %}
+                    {% if user.is_superuser or user.groups.filter(name='Admin').exists or user.groups.filter(name='Organizer').exists %}
                         <a href="{% url 'event_update' event.pk %}" class="btn btn-warning btn-sm">Edit</a>
                         <a href="{% url 'event_delete' event.pk %}" class="btn btn-danger btn-sm">Delete</a>
                     {% endif %}
